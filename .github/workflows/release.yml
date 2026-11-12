@@ -112,7 +112,7 @@ jobs:
 
   # ④ 多架构镜像（复用 binaries 编好的 Linux 二进制，镜像里只装工具 + 放二进制；
   #    arm64 仅需模拟 apt 层，构建快很多）。
-  #    始终发布到 GHCR（ghcr.io/chu0119/pojun）——用 Actions 内置 GITHUB_TOKEN，
+  #    始终发布到 GHCR（ghcr.io/q99266/pojun，fork 改的）——用 Actions 内置 GITHUB_TOKEN，
   #    无需配置任何 secrets；若另外配置了 DOCKERHUB_USERNAME / DOCKERHUB_TOKEN
   #    secrets，则同时推送到 <DockerHub用户名>/pojun，方便习惯 Docker Hub 的用户。
   docker-cred-check:
@@ -165,7 +165,7 @@ jobs:
           DOCKERHUB_OK: ${{ needs.docker-cred-check.outputs.ok }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: |
-          imgs="ghcr.io/chu0119/pojun"
+          imgs="ghcr.io/q99266/pojun"
           if [ "$DOCKERHUB_OK" = "true" ] && [ -n "$DOCKERHUB_USERNAME" ]; then
             imgs="$imgs,${DOCKERHUB_USERNAME}/pojun"
           fi
